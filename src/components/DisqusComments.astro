@@ -1,0 +1,55 @@
+---
+interface Props {
+  identifier: string;
+  title: string;
+  url: string;
+}
+
+const { identifier, title, url } = Astro.props;
+---
+
+<section class="comments-section">
+  <h3 class="comments-heading">Discussion</h3>
+  <p class="comments-note">Have thoughts on this draft? I'd love to hear your feedback.</p>
+  <div id="disqus_thread"></div>
+</section>
+
+<script define:vars={{ identifier, title, url }}>
+  // TODO: Replace 'rory-ogallagher' with your actual Disqus shortname
+  // 1. Go to https://disqus.com and create an account
+  // 2. Register your site and get a shortname
+  // 3. Replace the shortname below
+  var disqus_config = function () {
+    this.page.url = url;
+    this.page.identifier = identifier;
+    this.page.title = title;
+  };
+
+  (function () {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://rory-ogallagher.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+
+<style>
+  .comments-section {
+    max-width: var(--max-width, 700px);
+    margin: 3rem auto 0;
+    padding: 2rem;
+  }
+
+  .comments-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent-dark, #4A6E50);
+    margin-bottom: 0.5rem;
+  }
+
+  .comments-note {
+    font-size: 0.9rem;
+    color: var(--text-muted, #8A8477);
+    margin-bottom: 1.5rem;
+  }
+</style>

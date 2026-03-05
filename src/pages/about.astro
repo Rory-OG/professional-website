@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About — Rory O'Gallagher">
+  <section class="about container">
+    <h1>About</h1>
+
+    <p>
+      I'm Rory O'Gallagher, a People Analytics professional who helps organizations transform how they understand
+      and support their workforce. I partner with <a href="https://ikonaanalytics.com" target="_blank" rel="noopener noreferrer">Ikona Analytics</a>
+      to deliver HR tech, data, and analytics transformation projects.
+    </p>
+
+    <p>
+      I'm driven by understanding how systems work — whether that's organizational behavior, the nervous system,
+      or a home automation setup. I believe the best insights come from looking at connections rather than isolated
+      data points.
+    </p>
+
+    <div class="links">
+      <h2>Find me elsewhere</h2>
+      <ul>
+        <li><a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .about h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .about p {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    max-width: 600px;
+    margin-bottom: 1.25rem;
+  }
+
+  .links {
+    margin-top: 2.5rem;
+  }
+
+  .links h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .links ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .links a {
+    font-weight: 500;
+  }
+</style>

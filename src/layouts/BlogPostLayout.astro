@@ -1,0 +1,89 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import CategoryTag from "../components/CategoryTag.astro";
+import ChangelogEntry from "../components/ChangelogEntry.astro";
+import ScrollObserver from "../components/ScrollObserver.astro";
+import DisqusComments from "../components/DisqusComments.astro";
+import "../styles/blog.css";
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+    publishedDate: string;
+    lastUpdated?: string;
+    categories?: string[];
+    changelog?: { date: string; note: string }[];
+    collection?: "professional" | "personal";
+  };
+}
+
+const { frontmatter } = Astro.props;
+const {
+  title,
+  description,
+  publishedDate,
+  lastUpdated,
+  categories = [],
+  changelog = [],
+  collection = "professional",
+} = frontmatter;
+
+const isWarm = collection === "personal";
+
+const disqusUrl = `${Astro.site}${Astro.url.pathname}`.replace(/\/+$/, "");
+const disqusIdentifier = Astro.url.pathname.replace(/^\/|\/$/g, "");
+
+// Estimate reading time from the raw content
+const rawContent = await Astro.slots.render("default");
+const wordCount = rawContent.replace(/<[^>]*>/g, "").split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.ceil(wordCount / 230));
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="blog-post">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime={publishedDate}>{publishedDate}</time>
+        {lastUpdated && <span class="separator">&middot;</span>}
+        {lastUpdated && <span class="updated">Updated {lastUpdated}</span>}
+        <span class="separator">&middot;</span>
+        <span>{readingTime} min read</span>
+      </div>
+
+      <h1 class="post-title">{title}</h1>
+
+      {categories.length > 0 && (
+        <div class="post-tags">
+          {categories.map((cat) => (
+            <CategoryTag name={cat} warm={isWarm} />
+          ))}
+        </div>
+      )}
+
+      <aside class="draft-notice">
+        This is a living draft &mdash; part of <em>Still Working On It</em>, a series of posts that grow and evolve over time.
+      </aside>
+    </header>
+
+    <div class="post-content">
+      <slot />
+    </div>
+
+    {changelog.length > 0 && (
+      <section class="changelog-box">
+        <h2 class="changelog-heading">Changelog</h2>
+        {changelog.map((entry) => (
+          <ChangelogEntry date={entry.date} note={entry.note} />
+        ))}
+      </section>
+    )}
+
+    <DisqusComments
+      identifier={disqusIdentifier}
+      title={title}
+      url={disqusUrl}
+    />
+  </article>
+  <ScrollObserver />
+</BaseLayout>

@@ -1,0 +1,129 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<header class="site-header">
+  <a href={base} class="site-name">Rory O'Gallagher</a>
+
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation" />
+  <label for="nav-toggle" class="nav-toggle-label">
+    <span class="hamburger"></span>
+  </label>
+
+  <nav class="site-nav">
+    <a href={`${base}about`}>About</a>
+    <a href={`${base}portfolio`}>Portfolio</a>
+    <a href={`${base}professional`}>Professional</a>
+    <a href={`${base}personal`}>Personal</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .site-name {
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--color-text, #2C2C2C);
+    text-decoration: none;
+  }
+
+  .site-nav {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .site-nav a {
+    text-decoration: none;
+    color: var(--color-text, #2C2C2C);
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.925rem;
+    transition: background-color 0.2s ease;
+  }
+
+  .site-nav a:hover {
+    background-color: var(--color-surface, #EDE9E0);
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-toggle-label {
+    display: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .hamburger,
+  .hamburger::before,
+  .hamburger::after {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: var(--color-text, #2C2C2C);
+    border-radius: 2px;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+
+  .hamburger::before,
+  .hamburger::after {
+    content: "";
+    position: absolute;
+  }
+
+  .hamburger::before {
+    top: -7px;
+  }
+
+  .hamburger::after {
+    top: 7px;
+  }
+
+  @media (max-width: 640px) {
+    .nav-toggle-label {
+      display: block;
+    }
+
+    .site-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 1rem;
+      flex-direction: column;
+      background-color: var(--color-bg, #F7F5F0);
+      border-radius: 12px;
+      padding: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      z-index: 100;
+    }
+
+    .nav-toggle:checked ~ .site-nav {
+      display: flex;
+    }
+
+    .nav-toggle:checked ~ .nav-toggle-label .hamburger {
+      background-color: transparent;
+    }
+
+    .nav-toggle:checked ~ .nav-toggle-label .hamburger::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    .nav-toggle:checked ~ .nav-toggle-label .hamburger::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+  }
+</style>

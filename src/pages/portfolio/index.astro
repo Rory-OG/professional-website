@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const portfolioItems = await getCollection('portfolio');
+const sorted = portfolioItems.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Portfolio — Rory O'Gallagher">
+  <section class="portfolio container">
+    <h1>Tools & Frameworks</h1>
+    <p class="intro">
+      Methodologies, frameworks, and tools I've developed through years of people analytics and HR transformation work.
+    </p>
+
+    <div class="portfolio-grid">
+      {sorted.map((item) => (
+        <ProjectCard
+          title={item.data.title}
+          description={item.data.description}
+          tags={item.data.tags}
+          href={item.data.link}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .portfolio {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .portfolio h1 {
+    margin-bottom: 1rem;
+  }
+
+  .intro {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 580px;
+    margin-bottom: 2rem;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .portfolio-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

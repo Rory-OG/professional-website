@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import '../../styles/blog.css';
+
+const allPosts = await getCollection('professional', ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+});
+const posts = allPosts.sort(
+  (a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime()
+);
+---
+
+<BaseLayout title="Professional Blog — Rory O'Gallagher">
+  <section class="blog-listing container">
+    <h1>Professional Blog</h1>
+    <p class="subtitle">
+      Still Working On It — thoughts on people analytics, IO psychology, data strategy, and organizational
+      transformation. Every post is a living draft.
+    </p>
+
+    <div class="posts">
+      {posts.map((entry) => (
+        <BlogCard
+          title={entry.data.title}
+          href={`${import.meta.env.BASE_URL}professional-blog/${entry.id}`}
+          date={entry.data.publishedDate}
+          lastUpdated={entry.data.lastUpdated}
+          excerpt={entry.data.description}
+          categories={entry.data.categories}
+          collection="professional"
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-listing {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .blog-listing h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  .subtitle {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 580px;
+    margin-bottom: 2rem;
+  }
+
+  .posts {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

@@ -1,0 +1,135 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogCard from '../components/BlogCard.astro';
+import '../styles/blog.css';
+
+const allProfessional = await getCollection('professional', ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+});
+const professionalPosts = allProfessional
+  .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
+  .slice(0, 2);
+
+const allPersonal = await getCollection('personal', ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+});
+const personalPosts = allPersonal
+  .sort((a, b) => new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime())
+  .slice(0, 2);
+---
+
+<BaseLayout title="Rory O'Gallagher">
+  <section class="hero container">
+    <h1>Understanding how things <span class="highlight">work</span> — and what gets in the way.</h1>
+    <p>I'm a People Analytics professional exploring the systems behind organizations, behavior, and well-being. This is where I think out loud.</p>
+  </section>
+
+  <hr class="organic-divider container" />
+
+  <section class="container section">
+    <h2 class="section-heading">Professional Blog — Still Working On It</h2>
+    {professionalPosts.map((entry) => (
+      <BlogCard
+        title={entry.data.title}
+        href={`${import.meta.env.BASE_URL}professional-blog/${entry.id}`}
+        date={entry.data.publishedDate}
+        lastUpdated={entry.data.lastUpdated}
+        excerpt={entry.data.description}
+        categories={entry.data.categories}
+        collection="professional"
+      />
+    ))}
+    <a href={`${import.meta.env.BASE_URL}professional-blog`} class="view-all">View all professional posts</a>
+  </section>
+
+  <hr class="organic-divider container" />
+
+  <section class="container section">
+    <h2 class="section-heading">Personal Blog — Still Working On It</h2>
+    {personalPosts.map((entry) => (
+      <BlogCard
+        title={entry.data.title}
+        href={`${import.meta.env.BASE_URL}personal-blog/${entry.id}`}
+        date={entry.data.publishedDate}
+        lastUpdated={entry.data.lastUpdated}
+        excerpt={entry.data.description}
+        categories={entry.data.categories}
+        collection="personal"
+      />
+    ))}
+    <a href={`${import.meta.env.BASE_URL}personal-blog`} class="view-all">View all personal posts</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero h1 {
+    font-size: 2.4rem;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+
+  .highlight {
+    color: var(--accent);
+  }
+
+  .hero p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  .section {
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .section-heading {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-heading::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .view-all {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .view-all:hover {
+    color: var(--accent-dark);
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      padding-top: 5rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+    }
+  }
+</style>

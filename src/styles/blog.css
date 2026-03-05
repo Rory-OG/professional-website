@@ -1,0 +1,170 @@
+/* ==========================================================================
+   Blog Styles — Post cards, tags, meta, and content-specific components
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Post Cards
+   -------------------------------------------------------------------------- */
+
+.post-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.post-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(107, 143, 113, 0.08);
+  transform: translateY(-2px);
+}
+
+.post-card a {
+  color: inherit;
+}
+
+.post-card + .post-card {
+  margin-top: 1.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   2. Post Meta (date, reading time, etc.)
+   -------------------------------------------------------------------------- */
+
+.post-meta {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   3. Post Excerpt
+   -------------------------------------------------------------------------- */
+
+.post-excerpt {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin-top: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. Tags
+   -------------------------------------------------------------------------- */
+
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  padding: 0.3em 0.75em;
+  border-radius: 20px;
+  background: rgba(107, 143, 113, 0.1);
+  color: var(--accent-dark);
+  white-space: nowrap;
+}
+
+/* Warm variant — used for personal blog tags */
+.tag.warm {
+  background: var(--accent-warm-light);
+  color: var(--accent-warm);
+}
+
+/* --------------------------------------------------------------------------
+   5. Draft Notice
+   -------------------------------------------------------------------------- */
+
+.draft-notice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent-warm);
+  background: var(--accent-warm-light);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.draft-notice svg,
+.draft-notice img {
+  flex-shrink: 0;
+  width: 1.2em;
+  height: 1.2em;
+}
+
+/* --------------------------------------------------------------------------
+   6. Changelog Box
+   -------------------------------------------------------------------------- */
+
+.changelog-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.changelog-box h3,
+.changelog-box h4 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.changelog-entry {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.4rem 0;
+}
+
+.changelog-entry + .changelog-entry {
+  border-top: 1px solid var(--bg-surface);
+}
+
+/* Dot indicator */
+.changelog-entry::before {
+  content: '';
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 0.45em;
+}
+
+.changelog-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.changelog-text {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* --------------------------------------------------------------------------
+   7. Organic Divider
+   -------------------------------------------------------------------------- */
+
+.organic-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--border) 20%,
+    var(--border) 80%,
+    transparent
+  );
+  margin: 2.5rem 0;
+}

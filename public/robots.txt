@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://Rory-OG.github.io/professional-website/sitemap-index.xml

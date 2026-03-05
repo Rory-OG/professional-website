@@ -1,0 +1,34 @@
+---
+import CategoryTag from "./CategoryTag.astro";
+
+interface Props {
+  title: string;
+  href: string;
+  date: string;
+  lastUpdated?: string;
+  excerpt: string;
+  categories: string[];
+  collection: "professional" | "personal";
+}
+
+const { title, href, date, lastUpdated, excerpt, categories, collection } = Astro.props;
+const isWarm = collection === "personal";
+---
+
+<article class="post-card">
+  <div class="post-card-meta">
+    <time>{date}</time>
+    {lastUpdated && <span class="updated">Updated {lastUpdated}</span>}
+  </div>
+  <h3 class="post-card-title">
+    <a href={href}>{title}</a>
+  </h3>
+  <p class="post-card-excerpt">{excerpt}</p>
+  {categories.length > 0 && (
+    <div class="post-card-tags">
+      {categories.map((cat) => (
+        <CategoryTag name={cat} warm={isWarm} />
+      ))}
+    </div>
+  )}
+</article>

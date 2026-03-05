@@ -1,0 +1,10 @@
+---
+interface Props {
+  name: string;
+  warm?: boolean;
+}
+
+const { name, warm = false } = Astro.props;
+---
+
+<span class:list={["tag", { warm }]}>{name}</span>
